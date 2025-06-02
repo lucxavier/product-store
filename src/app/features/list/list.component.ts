@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
-export class ListComponent {}
+export class ListComponent implements OnInit {
+  httpClient = inject(HttpClient);
+  products: any[] = [];
+
+  ngOnInit(): void {
+    this.httpClient.get('/api/products').subscribe({
+      next: (products) => {
+        this.products = products as any[];
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      },
+    });
+  }
+}
