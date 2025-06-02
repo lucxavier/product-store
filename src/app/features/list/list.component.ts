@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+import { ProductsService } from '../../shared/services/products.service';
+import { Product } from '../../shared/interfaces/product-interface';
 
 @Component({
   selector: 'app-list',
@@ -9,13 +10,13 @@ import { Component, inject, OnInit } from '@angular/core';
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
-  httpClient = inject(HttpClient);
-  products: any[] = [];
+  productsService = inject(ProductsService);
+  products: Product[] = [];
 
   ngOnInit(): void {
-    this.httpClient.get('/api/products').subscribe({
+    this.productsService.getAll().subscribe({
       next: (products) => {
-        this.products = products as any[];
+        this.products = products;
       },
       error: (error) => {
         console.error('Error fetching products:', error);
