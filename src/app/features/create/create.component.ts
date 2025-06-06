@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })
-export class Create {}
+export class CreateComponent {}
